@@ -1,0 +1,103 @@
+<html>
+  <head>
+    <style>
+    body {
+  background: #007bff;
+  background: linear-gradient(to right, rgb(8, 236, 168), rgb(238, 51, 255));
+}
+
+    </style>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script type="text/javascript" charset="UTF-8">
+    function convert(){
+    
+			var from =document.getElementById("from").value;
+			var to = document.getElementById("to").value;
+			var xmlhttp= new XMLHttpRequest();
+			var url="https://free.currencyconverterapi.com/api/v6/convert?q="+from+"_"+to+"&compact=ultra&apiKey=96e5fffd5546f99de0af";
+   
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send();
+			xmlhttp.onreadystatechange=function(){
+				if(this.readyState === 4 && this.status === 200 )
+				{
+					var result=this.responseText;
+					console.log(result);
+					var jsResult=JSON.parse(result);
+          var q = from+"_"+to;
+          console.log(q);
+          console.log(jsResult[q]);
+			
+          var amount = jsResult[q] * document.getElementById('from_VAL').value;
+          console.log(amount);
+
+					document.getElementById("to_VAL").value= amount;
+				}
+      }
+    } 
+  </script>
+</head>
+<body>
+  <div>
+    <center><h1>Currency Converter</h1></center>
+  </div>
+  <div class="container">
+
+  </div>
+  <div class="container">
+    <form class="form-group">
+     <h2> Initial Value</h2><input type="text" value="0" name="from_VAL" class="form-control" id="from_VAL" placeholder="Enter amount" />
+     
+    <br>
+    <br>
+    <h4>From:</h4><div class="medium-3 columns">
+      <select id="from" class="postfix form-control">
+        <option value="AUD" >AUD</option>
+        <option value="AZN" >AZN</option>
+        <option value="BHD" >BHD</option>
+        <option value="CAD" >CAD</option>
+        <option value="CHF" >CHF</option>
+        <option value="EUR" >EUR</option>
+        <option value="GBP" >GBP</option>
+        <option value="INR" >INR</option>
+        <option value="JOD" >JOD</option>
+        <option value="KWD" >KWD</option>
+        <option value="KYD" >KYD</option>
+        <option value="OMR" >OMR</option>
+        <option value="USD" selected>USD</option>
+        <option value="UYU" >UYU</option>
+      </select>
+    </div>
+    <br>
+    <br>
+    <h4>To:</h4><div class="medium-3 columns">
+       <select id="to" class="postfix form-control">
+         <option value="AUD" >AUD</option>
+         <option value="AZN" >AZN</option>
+         <option value="BHD" >BHD</option>
+         <option value="CAD" >CAD</option>
+         <option value="CHF" >CHF</option>
+         <option value="EUR" >EUR</option>
+         <option value="GBP" >GBP</option>
+         <option value="INR" selected>INR</option>
+         <option value="JOD" >JOD</option>
+         <option value="KWD" >KWD</option>
+         <option value="KYD" >KYD</option>
+         <option value="OMR" >OMR</option>
+         <option value="USD">USD</option>
+         <option value="UYU" >UYU</option>
+       </select>
+    </div>
+    
+    <br>
+    <div class="medium-3 columns" style="display:flex; flex-direction:row;">
+      <h3>Converted Value:</h3>
+      <input type="text" id="to_VAL" style="margin-left:100px;" readonly placeholder="get value" disabled style="background-color: #eee; font-weight: bold;" value=0 />
+      <button type="button" name="button" style="margin-left:100px;" class="btn btn-success" onclick="convert()"> Convert This!! </button>
+    </div>
+  </form>
+  </div>
+</body>
+</html>
